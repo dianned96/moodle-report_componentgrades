@@ -39,6 +39,7 @@ require_login($course);
 
 $modinfo = get_fast_modinfo($course->id);
 $cm = $modinfo->get_cm($modid);
+
 $modcontext = context_module::instance($cm->id);
 require_capability('mod/assign:grade', $modcontext);
 
@@ -75,8 +76,7 @@ $data = $DB->get_records_sql("SELECT    grf.id AS grfid, crs.shortname AS course
                                 WHERE cm.id = ? AND gin.status = 1
                                 ORDER BY lastname ASC, firstname ASC, userid ASC, grc.sortorder ASC,
                                 grc.description ASC", array($cm->id));
-
-$students = report_componentgrades_get_students($course->id);
+$students = report_componentgrades_get_students($modcontext, $cm);
 
 $first = reset($data);
 if ($first === false) {

@@ -85,7 +85,7 @@ foreach ($data as $d) {
     }
 }
 
-$students = report_componentgrades_get_students($course->id);
+$students = report_componentgrades_get_students($modcontext, $cm);
 
 $first = reset($data);
 if ($first === false) {

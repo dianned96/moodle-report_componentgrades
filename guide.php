@@ -75,7 +75,7 @@ $data = $DB->get_records_sql("SELECT    ggf.id AS ggfid, crs.shortname AS course
                                 ORDER BY lastname ASC, firstname ASC, userid ASC, ggc.sortorder ASC,
                                 ggc.shortname ASC", array($cm->id));
 
-$students = report_componentgrades_get_students($course->id);
+$students = report_componentgrades_get_students($modcontext, $cm);
 
 $first = reset($data);
 if ($first === false) {

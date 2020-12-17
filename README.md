@@ -8,4 +8,4 @@ Install from the Moodle.org plugins database at
 https://moodle.org/plugins/report_componentgrades
 
 Or using git from the command line go to moodle\report
-git clone https://github.com/pauln/moodle-report_componentgrades componentgrades
+git clone https://github.com/marcusgreen/moodle-report_componentgrades componentgrades

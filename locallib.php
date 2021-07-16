@@ -37,7 +37,6 @@ require_once($CFG->dirroot . '/mod/assign/locallib.php');
 function report_componentgrades_get_students($modcontext, $cm) {
     global $DB;
     $assign = new assign($modcontext, $cm, $cm->course);
-
     $result = $DB->get_records_sql('SELECT stu.id AS userid, stu.idnumber AS idnumber,
         stu.firstname, stu.lastname, stu.username AS student
         FROM {user} stu

@@ -71,9 +71,9 @@ $data = $DB->get_records_sql("SELECT gbf.id AS ggfid, crs.shortname AS course, a
                                 JOIN {user} stu ON stu.id = ag.userid
                                 JOIN {user} marker ON marker.id = gin.raterid
                                 JOIN {gradingform_btec_fillings} gbf ON (gbf.instanceid = gin.id)
-                                AND (gbf.criterionid = gbc.id)
-                                WHERE cm.id = ? AND gin.status = 1
-                                ORDER BY lastname ASC, firstname ASC, userid ASC, gbc.sortorder ASC,
+                                 AND (gbf.criterionid = gbc.id)
+                               WHERE cm.id = ? AND gin.status = 1
+                            ORDER BY lastname ASC, firstname ASC, userid ASC, gbc.sortorder ASC,
                                 gbc.shortname ASC", array($cm->id));
 
 foreach ($data as $d) {

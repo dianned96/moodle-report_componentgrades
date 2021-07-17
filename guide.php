@@ -89,9 +89,8 @@ $workbook = new MoodleExcelWorkbook("-");
 $workbook->send($filename);
 $sheet = $workbook->add_worksheet($cm->name);
 
-report_componentgrades_add_header($workbook, $sheet, $course->fullname, $cm->name, 'guide', $first->guide);
+$pos = report_componentgrades_add_header($workbook, $sheet, $course->fullname, $cm->name, 'guide', $first->guide);
 
-$pos = 4;
 $format = $workbook->add_format(array('size' => 12, 'bold' => 1));
 $format2 = $workbook->add_format(array('bold' => 1));
 foreach ($data as $line) {

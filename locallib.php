@@ -23,6 +23,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+define("HEADINGSROW", 4);
+
 /**
  * Get all students given a course id
  *
@@ -36,8 +38,8 @@ function report_componentgrades_get_students($courseid) {
         FROM {user} stu
         JOIN {user_enrolments} ue ON ue.userid = stu.id
         JOIN {enrol} enr ON ue.enrolid = enr.id
-        WHERE enr.courseid = ?
-        ORDER BY lastname ASC, firstname ASC, userid ASC', array($courseid));
+       WHERE enr.courseid = ?
+    ORDER BY lastname ASC, firstname ASC, userid ASC', array($courseid));
 }
 /**
  * Add header text to report, name of course etc
@@ -67,17 +69,19 @@ function report_componentgrades_add_header(MoodleExcelWorkbook  $workbook, Moodl
     // Column headers - two rows for grouping.
     $format = $workbook->add_format(array('size' => 12, 'bold' => 1));
     $format2 = $workbook->add_format(array('bold' => 1));
-    $sheet->write_string(4, 0, get_string('student', 'report_componentgrades'), $format);
-    $sheet->merge_cells(4, 0, 4, 3, $format);
-    $sheet->write_string(5, 0, get_string('firstname', 'report_componentgrades'), $format2);
-    $sheet->write_string(5, 1, get_string('lastname', 'report_componentgrades'), $format2);
-    $sheet->write_string(5, 2, get_string('username', 'report_componentgrades'), $format2);
+    $sheet->write_string(HEADINGSROW, 0, get_string('student', 'report_componentgrades'), $format);
+    $sheet->merge_cells(HEADINGSROW, 0, HEADINGSROW, 2, $format);
+    $col = 0;
+    $sheet->write_string(5, $col++, get_string('firstname', 'report_componentgrades'), $format2);
+    $sheet->write_string(5, $col++, get_string('lastname', 'report_componentgrades'), $format2);
+    $sheet->write_string(5, $col++, get_string('username', 'report_componentgrades'), $format2);
     if (get_config('report_componentgrades', 'showstudentid')) {
-        $sheet->write_string(5, 3, get_string('studentid', 'report_componentgrades'), $format2);
+        $sheet->write_string(5, $col, get_string('studentid', 'report_componentgrades'), $format2);
+        $col++;
     }
-    $sheet->set_column(0, 3, 10); // Set column widths to 10.
+    $sheet->set_column(0, $col, 10); // Set column widths to 10.
     /* TODO returning an arbitrary number needs fixing */
-    return 4;
+    return $col;
 
 }
 /**
@@ -145,7 +149,9 @@ function report_componentgrades_add_data(MoodleExcelWorksheet $sheet, array $stu
         $sheet->write_string($row, $col++, $student->firstname);
         $sheet->write_string($row, $col++, $student->lastname);
         $sheet->write_string($row, $col++, $student->student);
-        $sheet->write_string($row, $col++, $student->idnumber);
+        if (get_config('report_componentgrades', 'showstudentid')) {
+             $sheet->write_string($row, $col++, $student->idnumber);
+        }
 
         foreach ($student->data as $line) {
             if (is_numeric($line->score)) {

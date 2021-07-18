@@ -26,12 +26,12 @@ defined('MOODLE_INTERNAL') || die;
 define("HEADINGSROW", 4);
 
 /**
- * Get all students given a course id
- *
- * @param integer $courseid
- * @return void
+ * Get all students given the course/module details
+ * @param \context_module $modcontext
+ * @param \stdClass $cm
+ * @return array
  */
-function report_componentgrades_get_students($modcontext, $cm) {
+function report_componentgrades_get_students($modcontext, $cm) :array {
     global $DB;
     $assign = new assign($modcontext, $cm, $cm->course);
     $result = $DB->get_records_sql('SELECT stu.id AS userid, stu.idnumber AS idnumber,

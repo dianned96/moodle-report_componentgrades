@@ -23,7 +23,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-<<<<<<< HEAD
 define("HEADINGSROW", 4);
 
 /**
@@ -32,21 +31,7 @@ define("HEADINGSROW", 4);
  * @param integer $courseid
  * @return void
  */
-function report_componentgrades_get_students($courseid) {
-=======
-global $CFG;
-require_once($CFG->dirroot . '/mod/assign/locallib.php');
-
-
- /**
-  * Get all students given the context
-  *
-  * @param \context_module $modcontext
-  * @param stdClass $cm
-  * @return array
-  */
 function report_componentgrades_get_students($modcontext, $cm) {
->>>>>>> blind_mark
     global $DB;
     $assign = new assign($modcontext, $cm, $cm->course);
     $result = $DB->get_records_sql('SELECT stu.id AS userid, stu.idnumber AS idnumber,
@@ -54,12 +39,8 @@ function report_componentgrades_get_students($modcontext, $cm) {
         FROM {user} stu
         JOIN {user_enrolments} ue ON ue.userid = stu.id
         JOIN {enrol} enr ON ue.enrolid = enr.id
-<<<<<<< HEAD
        WHERE enr.courseid = ?
-    ORDER BY lastname ASC, firstname ASC, userid ASC', array($courseid));
-=======
-        WHERE enr.courseid = ?
-        ORDER BY lastname ASC, firstname ASC, userid ASC', [$cm->course]);
+    ORDER BY lastname ASC, firstname ASC, userid ASC', [$cm->course]);
     if ($assign->is_blind_marking()) {
         foreach ($result as &$r) {
             $r->firstname = '';
@@ -69,7 +50,6 @@ function report_componentgrades_get_students($modcontext, $cm) {
         }
     }
     return $result;
->>>>>>> blind_mark
 }
 /**
  * Add header text to report, name of course etc

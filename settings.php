@@ -16,8 +16,7 @@
 /**
  * Data to control defaults when creating and running a question
  *
- * @package    report
- * @subpackage component_grades
+ * @package    report_componentgrades
  * @copyright  2021 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

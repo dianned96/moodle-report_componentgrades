@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class for tests related to componentgrades report events.
  *
  * @package    report_componentgrades
- * @copyright  2018 Marcus Green <rajesh@moodle.com>
+ * @copyright  2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 class report_componentgrades_events_testcase extends advanced_testcase {

@@ -23,6 +23,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+<<<<<<< HEAD
 define("HEADINGSROW", 4);
 
 /**
@@ -32,14 +33,43 @@ define("HEADINGSROW", 4);
  * @return void
  */
 function report_componentgrades_get_students($courseid) {
+=======
+global $CFG;
+require_once($CFG->dirroot . '/mod/assign/locallib.php');
+
+
+ /**
+  * Get all students given the context
+  *
+  * @param \context_module $modcontext
+  * @param stdClass $cm
+  * @return array
+  */
+function report_componentgrades_get_students($modcontext, $cm) {
+>>>>>>> blind_mark
     global $DB;
-    return $DB->get_records_sql('SELECT stu.id AS userid, stu.idnumber AS idnumber,
+    $assign = new assign($modcontext, $cm, $cm->course);
+    $result = $DB->get_records_sql('SELECT stu.id AS userid, stu.idnumber AS idnumber,
         stu.firstname, stu.lastname, stu.username AS student
         FROM {user} stu
         JOIN {user_enrolments} ue ON ue.userid = stu.id
         JOIN {enrol} enr ON ue.enrolid = enr.id
+<<<<<<< HEAD
        WHERE enr.courseid = ?
     ORDER BY lastname ASC, firstname ASC, userid ASC', array($courseid));
+=======
+        WHERE enr.courseid = ?
+        ORDER BY lastname ASC, firstname ASC, userid ASC', [$cm->course]);
+    if ($assign->is_blind_marking()) {
+        foreach ($result as &$r) {
+            $r->firstname = '';
+            $r->lastname = '';
+            $r->student = get_string('participant', 'assign') .
+             ' ' . \assign::get_uniqueid_for_user_static($cm->instance, $r->userid);
+        }
+    }
+    return $result;
+>>>>>>> blind_mark
 }
 /**
  * Add header text to report, name of course etc
@@ -53,8 +83,8 @@ function report_componentgrades_get_students($courseid) {
  * @param string $methodname
  * @return void
  */
-function report_componentgrades_add_header(MoodleExcelWorkbook  $workbook, MoodleExcelWorksheet  $sheet,
- $coursename, $modname, $method, $methodname) {
+function report_componentgrades_add_header(MoodleExcelWorkbook $workbook, MoodleExcelWorksheet $sheet,
+    $coursename, $modname, $method, $methodname) {
     // Course, assignment, marking guide / rubric names.
     $format = $workbook->add_format(array('size' => 18, 'bold' => 1));
     $sheet->write_string(0, 0, $coursename, $format);

@@ -14,19 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Data to control defaults when creating and running a question
+ * Data to control defaults when creating and running this plugin
  *
  * @package    report_componentgrades
- * @copyright  2021 Marcus Green
+ * @copyright  2021 Dianne Dhanassar <dianne.dhanassar@my.uwi.edu>
+ * @copyright  based on work by 2014 Paul Nicholls and 2018 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox(
-        'report_componentgrades/showstudentid',
+        'report_componentgrades/showgroups',
+        get_string('showgroups', 'report_componentgrades'),
+        get_string('showgroups_desc', 'report_componentgrades'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'csvreport_componentgrades/showstudentid',
         get_string('showstudentid', 'report_componentgrades'),
         get_string('showstudentid_text', 'report_componentgrades'),
-        0
+        1
     ));
 }
